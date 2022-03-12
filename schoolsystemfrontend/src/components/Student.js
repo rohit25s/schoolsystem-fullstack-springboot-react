@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { Container ,Paper} from '@material-ui/core';
@@ -14,30 +14,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Student({onDelete}) {
+export default function Student({students, addStudent, onDelete}) {
     const paperStyle={padding:'50px 20px', width:600,margin:"20px auto"}
     const[id, setId] = useState()
     const[name,setName]=useState('')
     const[email, setEmail] = useState('')
     const[schoolName,setSchoolName]=useState('')
-    const[students,setStudents]=useState([])
     const[showList, setShowList] = useState(true)
     const[showForm, setShowForm] = useState(false)
     const classes = useStyles();
-    
-
-  const handleClick=(e)=>{
-        e.preventDefault()
-        const student={id, name, email, schoolName}
-        console.log(student)
-        fetch("http://localhost:8080/student",{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify(student)
-        }).then(()=>{
-            console.log("New Student added")
-        })
-    }
 
     const handlechangeList = () => {
         setShowList(!showList);
@@ -47,13 +32,17 @@ export default function Student({onDelete}) {
         setShowForm(!showForm);
     };  
 
-    useEffect(()=>{
-    fetch("http://localhost:8080/student/")
-    .then(res=>res.json())
-    .then((result)=>{
-        setStudents(result);
-        })
-    },[])
+    const onSubmit = (e) => {
+      e.preventDefault()
+  
+      if (!id) {
+        alert('Please add a student')
+        return
+      }
+  
+      addStudent({ id, name, email, schoolName })
+    }
+
 
     const showListResult = () => {
         return (
@@ -97,7 +86,7 @@ export default function Student({onDelete}) {
                 value={schoolName}
                 onChange={(e)=>setSchoolName(e.target.value)}
                 />
-                <Button color='blue' text='Add' onClick={handleClick}/>
+                <Button color='blue' text='Add' onClick={onSubmit}/>
             </form> 
         </Paper>
         );
@@ -112,7 +101,7 @@ export default function Student({onDelete}) {
           onClick={handlechangeForm}
         />
     {showForm ? showAdd() : null}    
-
+    <br/>  
     <Button
           color={showList ? 'red' : 'green'}
           text={showList ? 'Close' : 'Show Students'}
@@ -120,5 +109,6 @@ export default function Student({onDelete}) {
         />
         {showList ? showListResult() : null}    
     </Container>
+    
   );
 }

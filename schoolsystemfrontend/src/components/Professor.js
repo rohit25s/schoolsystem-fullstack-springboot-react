@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { Container ,Paper} from '@material-ui/core';
@@ -14,31 +14,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Professor({onDelete}) {
+export default function Professor({professors, addProfessor, onDelete}) {
     const paperStyle={padding:'50px 20px', width:600,margin:"20px auto"}
     const[id, setId] = useState()
     const[name,setName]=useState('')
     const[email, setEmail] = useState('')
     const[schoolName,setSchoolName]=useState('')
     const[courseTaught, setCourseTaught] = useState('')
-    const[professors,setProfessors]=useState([])
     const[showList, setShowList] = useState(true)
     const[showForm, setShowForm] = useState(false)
     const classes = useStyles();
     
-
-  const handleClick=(e)=>{
-        e.preventDefault()
-        const professor={id, name, email, schoolName, courseTaught}
-        console.log(professor)
-        fetch("http://localhost:8080/professor",{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify(professor)
-        }).then(()=>{
-            console.log("New Professor added")
-        })
-    }
 
     const handlechangeList = () => {
         setShowList(!showList);
@@ -48,13 +34,16 @@ export default function Professor({onDelete}) {
         setShowForm(!showForm);
     };  
 
-    useEffect(()=>{
-    fetch("http://localhost:8080/professor/")
-    .then(res=>res.json())
-    .then((result)=>{
-        setProfessors(result);
-        })
-    },[])
+    const onSubmit = (e) => {
+      e.preventDefault()
+  
+      if (!id) {
+        alert('Please add a professor')
+        return
+      }
+  
+      addProfessor({ id, name, email, schoolName, courseTaught })
+    }
 
     const showListResult = () => {
         return (
@@ -103,7 +92,7 @@ export default function Professor({onDelete}) {
                 value={courseTaught}
                 onChange={(e)=>setCourseTaught(e.target.value)}
                 />
-                <Button color='blue' text='Add' onClick={handleClick}/>
+                <Button color='blue' text='Add' onClick={onSubmit}/>
             </form> 
         </Paper>
         );
@@ -118,7 +107,7 @@ export default function Professor({onDelete}) {
           onClick={handlechangeForm}
         />
     {showForm ? showAdd() : null}    
-
+     <br/> 
     <Button
           color={showList ? 'red' : 'green'}
           text={showList ? 'Close' : 'Show Professors'}

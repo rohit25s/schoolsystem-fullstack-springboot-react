@@ -1,7 +1,10 @@
 package com.chegg.schoolsystem.controller;
 
+import com.chegg.schoolsystem.exceptions.StudentAlreadyPresentException;
 import com.chegg.schoolsystem.model.Student;
 import com.chegg.schoolsystem.service.StudentService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,31 +20,31 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/student", method = RequestMethod.POST )
-    public String addStudent(@RequestBody Student student){
-        studentService.addStudent(student);
-        return "student added, name:" + student.getName();
+    public Student addStudent(@RequestBody Student student) throws StudentAlreadyPresentException{
+        return studentService.addStudent(student);
     }
 
     @RequestMapping(value = "/student", method = RequestMethod.GET)
-    public List<Student> getAllStudents(@RequestParam Optional<String> schoolName){
-        return studentService.getAllStudents(schoolName);
+    public ResponseEntity getAllStudents(@RequestParam Optional<String> schoolName){
+        List<Student> students = studentService.getAllStudents(schoolName);
+        return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
     @RequestMapping(value="/student", method = RequestMethod.PUT)
-    public String updateStudent(@RequestBody Student student){
-        studentService.updateStudent(student);
-        return "student updated: name" + student.getName();
+    public Student updateStudent(@RequestBody Student student){
+        return studentService.updateStudent(student);
     }
 
     @RequestMapping(value = "/student/{id}", method = RequestMethod.GET)
-    public Student getStudent(@PathVariable int id){
-        return studentService.getStudent(id);
+    public ResponseEntity getStudent(@PathVariable int id){
+        Student student = studentService.getStudent(id);
+        return new ResponseEntity(student, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/student/{id}", method = RequestMethod.DELETE)
-    public String deleteStudent(@PathVariable int id){
+    public ResponseEntity deleteStudent(@PathVariable int id){
         studentService.deleteStudent(id);
-        return "Student Deleted";
+        return new ResponseEntity("Student Deleted", HttpStatus.OK);
     }
 
 }

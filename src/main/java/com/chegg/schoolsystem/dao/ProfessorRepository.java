@@ -1,5 +1,6 @@
 package com.chegg.schoolsystem.dao;
 
+import com.chegg.schoolsystem.exceptions.ProfessorAlreadyPresentException;
 import com.chegg.schoolsystem.exceptions.ProfessorNotFoundException;
 import com.chegg.schoolsystem.model.Professor;
 import org.springframework.stereotype.Repository;
@@ -12,9 +13,13 @@ public class ProfessorRepository {
 
     public Map<Integer, Professor> professorMap = new HashMap<>();
 
-    public void add(Professor professor){
-        professorMap.put(professor.getId(), professor);
-        return;
+    public Professor add(Professor professor){
+        if(professorMap.containsKey(professor.getId()))
+            throw new ProfessorAlreadyPresentException(professor.getId());
+        else {
+            professorMap.put(professor.getId(), professor);
+            return professor;
+        }
     }
 
     public List<Professor> findAll(Optional<String> schoolName){
@@ -29,7 +34,7 @@ public class ProfessorRepository {
         return result;
     }
 
-    public void update(Professor professor){
+    public Professor update(Professor professor){
         Professor oldProfessor = professorMap.get(professor.getId());
         if(professor.getName()!=null)
             oldProfessor.setName(professor.getName());
@@ -37,6 +42,7 @@ public class ProfessorRepository {
             oldProfessor.setEmail(professor.getEmail());
         if(professor.getSchoolName()!=null)
             oldProfessor.setSchoolName(professor.getSchoolName());
+        return oldProfessor;
     }
 
     public Professor get(int id){

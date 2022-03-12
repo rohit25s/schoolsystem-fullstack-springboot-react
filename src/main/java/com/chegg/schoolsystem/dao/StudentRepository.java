@@ -1,5 +1,6 @@
 package com.chegg.schoolsystem.dao;
 
+import com.chegg.schoolsystem.exceptions.StudentAlreadyPresentException;
 import com.chegg.schoolsystem.exceptions.StudentNotFoundException;
 import com.chegg.schoolsystem.model.Student;
 import org.springframework.stereotype.Repository;
@@ -11,9 +12,11 @@ import java.util.stream.Collectors;
 public class StudentRepository {
     public Map<Integer, Student> studentMap = new HashMap<>();
 
-    public void add(Student student){
+    public Student add(Student student){
+        if(studentMap.containsKey(student.getId()))
+            throw new StudentAlreadyPresentException(student.getId());
         studentMap.put(student.getId(), student);
-        return;
+        return student;
     }
 
     public List<Student> findAll(Optional<String> schoolName){
@@ -28,7 +31,7 @@ public class StudentRepository {
         return result;
     }
 
-    public void update(Student student){
+    public Student update(Student student){
         Student oldStudent = studentMap.get(student.getId());
         if(student.getName()!=null)
             oldStudent.setName(student.getName());
@@ -36,6 +39,7 @@ public class StudentRepository {
             oldStudent.setEmail(student.getEmail());
         if(student.getSchoolName()!=null)
             oldStudent.setSchoolName(student.getSchoolName());
+        return oldStudent;
     }
 
     public Student get(int id){

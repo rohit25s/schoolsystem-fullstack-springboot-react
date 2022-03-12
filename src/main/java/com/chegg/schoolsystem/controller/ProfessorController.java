@@ -2,6 +2,8 @@ package com.chegg.schoolsystem.controller;
 
 import com.chegg.schoolsystem.model.Professor;
 import com.chegg.schoolsystem.service.ProfessorService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,31 +19,31 @@ public class ProfessorController {
     }
 
     @RequestMapping(value = "/professor", method = RequestMethod.POST )
-    public String addProfessor(@RequestBody Professor professor){
-        professorService.addProfessor(professor);
-        return "professor added, name:" + professor.getName();
+    public Professor addProfessor(@RequestBody Professor professor){
+        return professorService.addProfessor(professor);
     }
 
     @RequestMapping(value = "/professor", method = RequestMethod.GET)
-    public List<Professor> getAllProfessors(@RequestParam Optional<String> schoolName){
-        return professorService.getAllProfessors(schoolName);
+    public ResponseEntity getAllProfessors(@RequestParam Optional<String> schoolName){
+        List<Professor> professors = professorService.getAllProfessors(schoolName);
+        return new ResponseEntity(professors, HttpStatus.OK);
     }
 
     @RequestMapping(value="/professor", method = RequestMethod.PUT)
-    public String updateProfessor(@RequestBody Professor professor){
-        professorService.updateProfessor(professor);
-        return "professor updated: name" + professor.getName();
+    public Professor updateProfessor(@RequestBody Professor professor){
+        return professorService.updateProfessor(professor);
     }
 
     @RequestMapping(value = "/professor/{id}", method = RequestMethod.GET)
-    public Professor getProfessor(@PathVariable int id){
-        return professorService.getProfessor(id);
+    public ResponseEntity getProfessor(@PathVariable int id){
+        Professor professor = professorService.getProfessor(id);
+        return new ResponseEntity(professor, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/professor/{id}", method = RequestMethod.DELETE)
-    public String deleteProfessor(@PathVariable int id){
+    public ResponseEntity deleteProfessor(@PathVariable int id){
         professorService.deleteProfessor(id);
-        return "Professor Deleted";
+        return new ResponseEntity("Professor Deleted", HttpStatus.OK);
     }
 
 }

@@ -4,7 +4,7 @@ import Student from './Student'
 import Professor from './Professor';
 import Button from './Button'
 
-export default function User({onDeleteProfessor, onDeleteStudent}) {
+export default function User({students, professors, addStudent, addProfessor, onDeleteProfessor, onDeleteStudent}) {
   const [value, setValue] = useState(true);
 
   const toggle = useCallback(() => {
@@ -16,10 +16,21 @@ export default function User({onDeleteProfessor, onDeleteStudent}) {
     Click button to toggle user type:    
     <Button
           color={value ? 'blue' : 'green'}
-          text={value ? 'Student' : 'Professor'}
+          text={'Toggle'}
           onClick={toggle}
-        />
-    {value ? <Student onDelete={onDeleteStudent}/> : <Professor onDelete={onDeleteProfessor}/>}    
+        /><br/>
+    <h1>{value ? 'Students' : 'Professor'} </h1>    
+    {value ? 
+    <Student 
+        students = {students}
+        addStudent = {addStudent}
+        onDelete={onDeleteStudent}
+    /> : 
+    <Professor 
+        professors = {professors}
+        addProfessor ={addProfessor}
+        onDelete={onDeleteProfessor}
+    />}    
 
     </Container>
   );

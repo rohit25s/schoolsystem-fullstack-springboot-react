@@ -1,6 +1,7 @@
 package com.chegg.schoolsystem.service;
 
 import com.chegg.schoolsystem.dao.ProfessorRepository;
+import com.chegg.schoolsystem.exceptions.ProfessorAlreadyPresentException;
 import com.chegg.schoolsystem.model.Professor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,16 +15,16 @@ public class ProfessorService {
     @Autowired
     private ProfessorRepository professorRepository;
 
-    public void addProfessor(Professor professor) {
-        professorRepository.add(professor);
+    public Professor addProfessor(Professor professor) throws ProfessorAlreadyPresentException {
+        return professorRepository.add(professor);
     }
 
     public List<Professor> getAllProfessors(Optional<String> schoolName) {
         return professorRepository.findAll(schoolName);
     }
 
-    public void updateProfessor(Professor professor){
-        professorRepository.update(professor);
+    public Professor updateProfessor(Professor professor){
+        return professorRepository.update(professor);
     }
 
     public Professor getProfessor(int id){
