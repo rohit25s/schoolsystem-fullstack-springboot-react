@@ -17,12 +17,12 @@ public class ProfessorRepository {
         return;
     }
 
-    public List<Professor> findAll(Optional<String> school_name){
+    public List<Professor> findAll(Optional<String> schoolName){
         List<Professor> result = new ArrayList<>(professorMap.values());
-        if(school_name.isPresent()) {
+        if(schoolName.isPresent()) {
             List<Professor> resultBySchool = result
                     .stream()
-                    .filter(p -> p.getSchool_name().contains(school_name.get()))
+                    .filter(p -> p.getSchoolName().contains(schoolName.get()))
                     .collect(Collectors.toList());
             return resultBySchool;
         }
@@ -35,8 +35,8 @@ public class ProfessorRepository {
             oldProfessor.setName(professor.getName());
         if(professor.getEmail()!=null)
             oldProfessor.setEmail(professor.getEmail());
-        if(professor.getSchool_name()!=null)
-            oldProfessor.setSchool_name(professor.getSchool_name());
+        if(professor.getSchoolName()!=null)
+            oldProfessor.setSchoolName(professor.getSchoolName());
     }
 
     public Professor get(int id){

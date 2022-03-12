@@ -1,10 +1,10 @@
-#fullstack schoolsytem example application with springboot and React#
+#fullstack schoolsytem example application with springboot and React
 
-##Models##
+##Models
 - Student
 - Professor
 
-##APIs##
+##APIs
 
 - **POST /student** - creates a student
 - **GET /student/{id}** - find student with id
@@ -12,6 +12,7 @@
 - **PUT /student/{id}** - update student with id
 - **GET /student?school_name={school_name}** - find all students in a school
 - **DELETE /student/{id}** - deletes student with id
+
 
 - **POST /professor** - creates a professor
 - **GET /professor/{id}** - find professor with id

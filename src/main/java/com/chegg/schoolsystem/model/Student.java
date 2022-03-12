@@ -4,13 +4,13 @@ public class Student {
     private int id;
     private String name;
     private String email;
-    private String school_name;
+    private String schoolName;
 
-    public Student(int id, String name, String email, String school_name) {
+    public Student(int id, String name, String email, String schoolName) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.school_name = school_name;
+        this.schoolName = schoolName;
     }
 
     public int getId() {
@@ -37,11 +37,11 @@ public class Student {
         this.email = email;
     }
 
-    public String getSchool_name() {
-        return school_name;
+    public String getSchoolName() {
+        return schoolName;
     }
 
-    public void setSchool_name(String school_name) {
-        this.school_name = school_name;
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
     }
 }

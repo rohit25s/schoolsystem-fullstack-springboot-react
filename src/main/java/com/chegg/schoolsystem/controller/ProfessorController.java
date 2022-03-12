@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 public class ProfessorController {
     ProfessorService professorService;
 
@@ -22,8 +23,8 @@ public class ProfessorController {
     }
 
     @RequestMapping(value = "/professor", method = RequestMethod.GET)
-    public List<Professor> getAllProfessors(@RequestParam Optional<String> school_name){
-        return professorService.getAllProfessors(school_name);
+    public List<Professor> getAllProfessors(@RequestParam Optional<String> schoolName){
+        return professorService.getAllProfessors(schoolName);
     }
 
     @RequestMapping(value="/professor", method = RequestMethod.PUT)

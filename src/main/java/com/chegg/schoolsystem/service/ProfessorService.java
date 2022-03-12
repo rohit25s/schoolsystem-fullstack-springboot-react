@@ -18,8 +18,8 @@ public class ProfessorService {
         professorRepository.add(professor);
     }
 
-    public List<Professor> getAllProfessors(Optional<String> school_name) {
-        return professorRepository.findAll(school_name);
+    public List<Professor> getAllProfessors(Optional<String> schoolName) {
+        return professorRepository.findAll(schoolName);
     }
 
     public void updateProfessor(Professor professor){

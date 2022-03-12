@@ -19,8 +19,8 @@ public class StudentService {
         studentRepository.add(student);
     }
 
-    public List<Student> getAllStudents(Optional<String> school_name) {
-        return studentRepository.findAll(school_name);
+    public List<Student> getAllStudents(Optional<String> schoolName) {
+        return studentRepository.findAll(schoolName);
     }
 
     public void updateStudent(Student student){

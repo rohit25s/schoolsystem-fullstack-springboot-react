@@ -16,12 +16,12 @@ public class StudentRepository {
         return;
     }
 
-    public List<Student> findAll(Optional<String> school_name){
+    public List<Student> findAll(Optional<String> schoolName){
         List<Student> result = new ArrayList<>(studentMap.values());
-        if(school_name.isPresent()) {
+        if(schoolName.isPresent()) {
             List<Student> resultBySchool = result
                     .stream()
-                    .filter(s -> s.getSchool_name().contains(school_name.get()))
+                    .filter(s -> s.getSchoolName().contains(schoolName.get()))
                     .collect(Collectors.toList());
             return resultBySchool;
         }
@@ -34,8 +34,8 @@ public class StudentRepository {
             oldStudent.setName(student.getName());
         if(student.getEmail()!=null)
             oldStudent.setEmail(student.getEmail());
-        if(student.getSchool_name()!=null)
-            oldStudent.setSchool_name(student.getSchool_name());
+        if(student.getSchoolName()!=null)
+            oldStudent.setSchoolName(student.getSchoolName());
     }
 
     public Student get(int id){
