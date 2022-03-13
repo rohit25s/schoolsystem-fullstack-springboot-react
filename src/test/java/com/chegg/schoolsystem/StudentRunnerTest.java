@@ -8,12 +8,14 @@ import com.chegg.schoolsystem.model.Student;
 import com.chegg.schoolsystem.service.StudentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 public class StudentRunnerTest {
 
     StudentController studentController;

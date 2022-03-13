@@ -1,8 +1,15 @@
 # fullstack SchoolSystem example application with springboot and React
 
+## Requirements
+- JDK >= 1.8
+- npm = 8.3.1
+- maven
+- Junit 4
+
 ## Models
-- Student
-- Professor
+- User
+  - Student
+  - Professor
 
 ## Functional Requirements
 - student's information 
@@ -59,7 +66,7 @@ git clone https://github.com/rohit25s/schoolsystem-fullstack-springboot-react.gi
 ### or
 - unzip repo
 ```
-cd schoolsystem-fullstack-springboot-react
+cd schoolsystem
 ```
 ### Backend
 ```
@@ -72,8 +79,13 @@ e.g
 GET http://localhost:8080/student/1
 ### Frontend
 ```
+cd schoolsystemfrontend
 npm install
 npm start
+```
+### To run tests
+```
+./mvnw test
 ```
 Open in Browser 
 [http://localhost:3000](http://localhost:3000)
