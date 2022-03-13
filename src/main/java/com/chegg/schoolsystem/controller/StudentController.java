@@ -25,18 +25,18 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/student", method = RequestMethod.GET)
-    public ResponseEntity getAllStudents(@RequestParam Optional<String> schoolName){
+    public ResponseEntity<List<Student>> getAllStudents(@RequestParam Optional<String> schoolName){
         List<Student> students = studentService.getAllStudents(schoolName);
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
-    @RequestMapping(value="/student", method = RequestMethod.PUT)
-    public Student updateStudent(@RequestBody Student student){
-        return studentService.updateStudent(student);
+    @RequestMapping(value="/student/{id}", method = RequestMethod.PUT)
+    public Student updateStudent(@PathVariable int id, @RequestBody Student student){
+        return studentService.updateStudent(id, student);
     }
 
     @RequestMapping(value = "/student/{id}", method = RequestMethod.GET)
-    public ResponseEntity getStudent(@PathVariable int id){
+    public ResponseEntity<Student> getStudent(@PathVariable int id){
         Student student = studentService.getStudent(id);
         return new ResponseEntity(student, HttpStatus.OK);
     }

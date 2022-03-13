@@ -24,18 +24,18 @@ public class ProfessorController {
     }
 
     @RequestMapping(value = "/professor", method = RequestMethod.GET)
-    public ResponseEntity getAllProfessors(@RequestParam Optional<String> schoolName){
+    public ResponseEntity<List<Professor>> getAllProfessors(@RequestParam Optional<String> schoolName){
         List<Professor> professors = professorService.getAllProfessors(schoolName);
         return new ResponseEntity(professors, HttpStatus.OK);
     }
 
-    @RequestMapping(value="/professor", method = RequestMethod.PUT)
-    public Professor updateProfessor(@RequestBody Professor professor){
-        return professorService.updateProfessor(professor);
+    @RequestMapping(value="/professor/{id}", method = RequestMethod.PUT)
+    public Professor updateProfessor(@PathVariable int id, @RequestBody Professor professor){
+        return professorService.updateProfessor(id, professor);
     }
 
     @RequestMapping(value = "/professor/{id}", method = RequestMethod.GET)
-    public ResponseEntity getProfessor(@PathVariable int id){
+    public ResponseEntity<Professor> getProfessor(@PathVariable int id){
         Professor professor = professorService.getProfessor(id);
         return new ResponseEntity(professor, HttpStatus.OK);
     }

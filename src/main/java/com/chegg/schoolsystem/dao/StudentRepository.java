@@ -31,15 +31,18 @@ public class StudentRepository {
         return result;
     }
 
-    public Student update(Student student){
-        Student oldStudent = studentMap.get(student.getId());
-        if(student.getName()!=null)
-            oldStudent.setName(student.getName());
-        if(student.getEmail()!=null)
-            oldStudent.setEmail(student.getEmail());
-        if(student.getSchoolName()!=null)
-            oldStudent.setSchoolName(student.getSchoolName());
-        return oldStudent;
+    public Student update(int id, Student student){
+        if (studentMap.containsKey(id)) {
+            Student oldStudent = studentMap.get(student.getId());
+            if (student.getName() != null)
+                oldStudent.setName(student.getName());
+            if (student.getEmail() != null)
+                oldStudent.setEmail(student.getEmail());
+            if (student.getSchoolName() != null)
+                oldStudent.setSchoolName(student.getSchoolName());
+            return oldStudent;
+        }
+        else throw new StudentNotFoundException(id);
     }
 
     public Student get(int id){

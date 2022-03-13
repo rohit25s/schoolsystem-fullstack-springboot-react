@@ -34,15 +34,22 @@ public class ProfessorRepository {
         return result;
     }
 
-    public Professor update(Professor professor){
-        Professor oldProfessor = professorMap.get(professor.getId());
-        if(professor.getName()!=null)
-            oldProfessor.setName(professor.getName());
-        if(professor.getEmail()!=null)
-            oldProfessor.setEmail(professor.getEmail());
-        if(professor.getSchoolName()!=null)
-            oldProfessor.setSchoolName(professor.getSchoolName());
-        return oldProfessor;
+    public Professor update(int id, Professor professor){
+        if(professorMap.containsKey(id)) {
+            Professor oldProfessor = professorMap.get(id);
+
+            if (professor.getName() != null)
+                oldProfessor.setName(professor.getName());
+            if (professor.getEmail() != null)
+                oldProfessor.setEmail(professor.getEmail());
+            if (professor.getSchoolName() != null)
+                oldProfessor.setSchoolName(professor.getSchoolName());
+            if (professor.getCourseTaught() != null)
+                oldProfessor.setCourseTaught(professor.getCourseTaught());
+            return oldProfessor;
+        }
+        else
+            throw new ProfessorNotFoundException(id);
     }
 
     public Professor get(int id){
